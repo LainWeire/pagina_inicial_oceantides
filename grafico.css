@@ -1,0 +1,322 @@
+.grafico-slider {
+  overflow: hidden;
+  width: 100%;
+  padding: 20px 0;
+}
+
+
+
+.container-grafico {
+  display: none; /* Esconde todos por padrão */
+  flex: 0 0 100%;
+  padding: 20px;
+  justify-content: flex-start; 
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  box-sizing: border-box;
+  width: 100%; 
+  height: auto;
+}
+
+.container-grafico.active {
+  display: flex; /* Mostra apenas o ativo */
+}
+
+.texto-grafico {
+  background: #f4f4f4;
+  border-left: 4px solid #2c3e50;
+  padding: 24px 28px;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.07);
+  max-width: 500px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.texto-grafico p {
+  margin: 0;
+  line-height: 1.7;
+  color: #2c3e50;
+  font-size: 1.05rem;
+}
+
+.container-grafico canvas {
+  width: 500px !important;
+  height: 500px !important;
+  max-width: 500px;
+  max-height: 500px;
+  display: block; /* para evitar espaçamentos extras */
+}
+
+
+.botoes-graficos-container {
+  display: flex;
+  gap: 20px;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: aliceblue;
+  justify-content: center;
+  align-items: center;
+  width: 500px;
+  margin: 0 auto 20px auto;
+}
+
+.grafico-botoes {
+  background-color: transparent;
+  border: none;
+  color: #222;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 10px 20px;
+  transition: background-color 0.3s ease;
+  outline: none;
+  position: relative;
+  border-radius: 6px;
+}
+
+.grafico-botoes:hover {
+  background-color: rgba(192, 192, 192, 0.3);
+}
+
+.grafico-botoes::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 3px;
+  width: 0;
+  background-color: #007BFF;
+  transition: width 0.3s ease;
+  border-radius: 0 0 6px 6px;
+}
+
+.grafico-botoes:hover::after,
+.grafico-botoes.ativo::after {
+  width: 100%;
+}
+
+.grafico-oceano-decoracao {
+  position: relative;
+  width: 350px;
+  height: 400px;
+  margin-left: 200px;
+  border-radius: 20px;
+  border: 10px solid #666;
+  background: #9fdfff;
+  overflow: hidden;
+  box-shadow: 0 0 30px 10px #9fdfff;
+  display: flex;
+  flex-direction: column;
+}
+
+.grafico-oceano-decoracao-radioativo {
+  position: relative;
+  width: 350px;
+  height: 400px;
+  margin-left: 200px;
+  border-radius: 20px;
+  border: 10px solid #666;
+  background: #05ad83;
+  overflow: hidden;
+  box-shadow: 0 0 30px 10px #05ad83;
+}
+
+
+
+.grafico-oceano-decoracao .ceu {
+  flex: 1; /* ocupa uma parte do container */
+  background: linear-gradient(to bottom, #048bc0, #b0dee6); /* gradiente azul céu */
+}
+
+.grafico-oceano-decoracao .agua {
+  flex: 0.7; /* ocupa o dobro da altura do céu */
+  background: linear-gradient(to bottom, #458caa, #0c5986); /* azul mar */
+  position: relative;
+  box-shadow: inset 0 20px 40px rgba(23, 170, 207, 0.3);
+}
+
+.grafico-oceano-decoracao img.polar {
+  width: 400px; 
+  height: 400px;
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  top: 17%;
+  transform: translateX(-50%);
+  object-fit: contain;
+  z-index: 10;
+  animation: flutuar-polar 4s ease-in-out infinite;
+}
+
+
+
+/* reflexos na janela */
+.grafico-oceano-decoracao::before,
+.grafico-oceano-decoracao::after {
+  content: '';
+  position: absolute;
+  width: 60px;
+  height: 200%;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transform: rotate(20deg);
+  top: -50%;
+  filter: blur(5px);
+}
+
+/* reflexos na janela radioativa  */
+.grafico-oceano-decoracao-radioativo::before,
+.grafico-oceano-decoracao-radioativo::after {
+  content: '';
+  position: absolute;
+  width: 60px;
+  height: 200%;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transform: rotate(20deg);
+  top: -50%;
+  filter: blur(5px);
+}
+
+.grafico-oceano-decoracao::before { 
+  left: 30%; 
+}
+
+.grafico-oceano-decoracao::after { 
+  left: 60%; 
+  width: 40px; 
+}
+
+/* imagens que se movem e flutuam */
+.grafico-oceano-decoracao img.nadando {
+  position: absolute;
+  width: 40px;
+  height: auto;
+  animation: mover-horizontal 15s linear infinite, flutuar-vertical 3s ease-in-out infinite alternate;
+}
+
+.grafico-oceano-decoracao-radioativo img.nadando-radioativo {
+  right: 50px;
+  position: absolute;
+  width: 60px;
+  height: auto;
+  animation: mover-horizontal 15s linear infinite, flutuar-vertical 3s ease-in-out infinite alternate;
+}
+
+.grafico-oceano-decoracao-radioativo img.nadando-radioativo-baleia {
+  top: 40%;
+  position: absolute;
+  width: 160px;
+  height: auto;
+  animation: baleia-nadando 15s linear infinite, flutuar-vertical 3s ease-in-out infinite alternate;
+  animation-delay: 10s;
+  left: -170px
+}
+
+@keyframes baleia-nadando {
+  from { left: -170px; }
+  to { left: 100%; }
+}
+
+@keyframes flutuar-polar {
+  0% {
+    transform: translateX(-50%) translateY(0);
+  }
+  50% {
+    transform: translateX(-50%) translateY(-15px);
+  }
+  100% {
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+
+
+
+@keyframes mover-horizontal {
+  from { left: -50px; }
+  to { left: 400px; }
+}
+
+@keyframes flutuar-vertical {
+  from { transform: translateY(0); }
+  to { transform: translateY(-20px); }
+}
+
+/* Responsividade */
+@media (max-width: 1200px) {
+  .container-grafico {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .grafico-oceano-decoracao {
+    margin-left: 0;
+    margin-top: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .botoes-graficos-container {
+    width: 90%;
+    gap: 10px;
+  }
+  
+  .grafico-botoes {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+  }
+  
+  
+  .grafico-oceano-decoracao {
+    width: 280px;
+    height: 320px;
+  }
+  
+  .texto-grafico {
+    max-width: 100%;
+    padding: 20px;
+  }
+}
+
+.bolha {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: radial-gradient(white, transparent);
+  border-radius: 50%;
+  bottom: 0;
+  animation: subir 5s linear infinite;
+  transform: translateY(0);
+  opacity: 0.7;
+}
+
+.bolha-radioativa {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: radial-gradient(yellow, transparent);
+  border-radius: 50%;
+  bottom: 0;
+  animation: subir 5s linear infinite;
+  transform: translateY(0);
+  opacity: 0.7;
+}
+
+@keyframes subir {
+  0% {
+    transform: translateY(0);
+   opacity: 0.7;
+  }
+  100% {
+    transform: translateY(-400px);
+    opacity: 0;
+  }
+}

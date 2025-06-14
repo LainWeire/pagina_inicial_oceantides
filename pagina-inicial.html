@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ocean Tides</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="padrao.css" />
+  <link rel="stylesheet" href="popup.css" />
+  <link rel="stylesheet" href="grafico.css" />
+</head>
+<body>
+<script>
+// Detecta o scroll e muda o estilo da navbar
+window.addEventListener('scroll', function() {
+  const navbar = document.querySelector('.navegacao-barra');
+  const scrollPosition = window.scrollY;
+  const triggerHeight = window.innerHeight * 0.1; 
+  
+  if (scrollPosition > triggerHeight) {
+    navbar.classList.add('scrolled');
+  } else {
+    navbar.classList.remove('scrolled');
+  }
+});
+</script>
+
+<!--DIALOG DO POP UP DOAÇÃO, TUDO ENTRE ESTE COMENTÁRIO ENVOLVE JAVASCRIPT-->
+
+<dialog id="doacao-dialog">
+  <button onclick="FecharPopupDoacao()" type="button" class="botao-popup-doacao"><img src="midia/botao fechar.png" > </button>
+
+  <div class="pop-up-container-esq">
+    <img class="img-popup-doacao" src="midia/imagem doacao.jpg" alt="submerso">
+
+    <h2>Você pode fazer a diferença.</h2>
+    <p class="primeiro">Para tornar o mundo mais amável e seguro novamente, contamos com a sua ajuda.</p>
+
+    <p class="segundo">É para estas causas que o seu dinheiro vai:</p>
+  </div>
+
+  <div class="pop-up-container-dir">
+  <h3>Sua doação importa.</h3>
+  <div class="doacao-opcoes">
+    <button type="submit" class="doacao-opcao" onclick="MudaValor5()" id="botao-doacao-5">R$5</button>
+    <button type="submit" class="doacao-opcao" onclick="MudaValor10()" id="botao-doacao-10">R$10</button>
+    <button type="submit" class="doacao-opcao" onclick="MudaValor25()" id="botao-doacao-25">R$25</button>
+    <button type="submit" class="doacao-opcao" onclick="MudaValor50()" id="botao-doacao-50">R$50</button>
+    <button type="submit" class="doacao-opcao" onclick="MudaValor75()" id="botao-doacao-75">R$75</button>
+    <button type="submit" class="doacao-opcao" onclick="MudaValor100()" id="botao-doacao-100">R$100</button>
+    <div class="valor_preco">
+      <span class="simbolo-moeda">R$</span>
+      <input type="number" placeholder="Seu preço aqui:" min="1" step="any" id="valor" class="doacao-input"/>
+    </div>
+  </div>
+  <button type="submit" class="enviar" id="enviar" onclick="Envia()">Doar</button>
+</div>
+
+</dialog>
+ 
+
+<script>
+  const dialog = document.getElementById("doacao-dialog")
+  const botao = document.getElementById("botao-doacao")
+
+  function AbrirPopupDoacao() {
+    dialog.showModal()
+  }
+
+  function FecharPopupDoacao() {
+    dialog.close()
+  }
+</script>
+
+<!--DIALOG DO POP UP DOAÇÃO, TUDO ENTRE ESTE COMENTÁRIO ENVOLVE JAVASCRIPT-->
+
+<div class="video-container">
+  <video autoplay muted loop class="video-bg">
+    <source src="midia/sea footage loop.mp4" type="video/mp4" />
+    Seu navegador não suporta vídeo em HTML5.
+  </video>
+  
+  <header>
+    <div class="navegacao-barra">
+      <a href="pagina-inicial.html"><img alt="logo" src="midia/logo.png" class="logo" ></a>
+      <div class="navegacao">
+        <nav>
+          <ul>
+            <li><button class="botao-nao-decorado" href="#">Sobre Nós</button></li>
+            <li><button class="botao-nao-decorado" href="#">Newsletter</button></li>
+            <li><button class="botao-nao-decorado" href="#">Loja</button></li>
+            <li><button class="botao-nao-decorado" type="button" onclick="AbrirPopupDoacao()">Doe</button></li>
+          </ul>
+        </nav>
+      </div>
+      <hr />
+    </div>
+  </header>
+
+  <script src="botao-doacao.js"></script>
+
+  <div class="slider-inicial">
+    <div class="imagens">
+      <img alt="fundo" src="midia/rebanho-golfinhos.jpg" class="fundo" />
+    </div>
+
+    <div class="conteudo">
+      <h1>Salve os Golfinhos do Japão, assine na SaveDolphins</h1>
+      <p>
+        Todos os anos, em Taiji, no Japão, os golfinhos são perseguidos em uma pequena enseada <br>
+        e massacrados da maneira mais horrível e cruel que se possa imaginar. As caçadas são <br>
+        subsidiadas pela indústria de cativeiro de golfinhos, que paga o dólar superior por <br>
+        alguns "mostram golfinhos de qualidade que são arrancados de suas famílias. O resto da <br>
+        vagem é morto por carne carregada com mercúrio e PCBs. A maioria dos japoneses sabe que
+        as caçadas existem. O governo japonês apoia os assassinos de golfinhos e nega quaisquer
+        problemas de saúde.<br>
+        <br>
+        Ajude-nos a acabar com isso, assine agora.
+      </p>
+
+      <a href="https://savedolphins.eii.org/take-action/take-action-save-japan-dolphins"><button class="decorado">Abaixo assinado da SaveDolphins</button></a>
+    </div>
+  </div>
+</div>
+<br>
+<svg width="100%" height="100" viewBox="0 0 1000 100" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+  <path d="M0,50 L950,50 L1000,100" stroke="black" stroke-width="2" fill="none"/>
+</svg>
+
+
+
+
+<div class="grafico-slider">
+    <!-- Container dos botões -->
+    <div class="botoes-graficos-container">
+      <button class="grafico-botoes ativo" data-slide="0" onclick="mostrarSlide(0)">1</button>
+      <button class="grafico-botoes" data-slide="1" onclick="mostrarSlide(1)">2</button>
+      <button class="grafico-botoes" data-slide="2" onclick="mostrarSlide(2)">3</button>
+    </div>
+  
+    <div class="titulo">
+      <h1>Dados dos Oceanos</h1>
+    </div>
+
+  <div class="slider-wrapper">
+    
+      <div class="container-grafico active">
+        <canvas id="Grafico1" width="300" height="300"></canvas>
+        <div class="texto-grafico">
+          <p>
+          Grande parte do lixo plástico que vai parar no mar vem de poucos países. China, Indonésia, Filipinas, Vietnã e até o Brasil estão entre os maiores responsáveis. O problema começa nos rios e acaba atingindo todo o oceano.<br><br>
+          Essa poluição ameaça tartarugas, golfinhos, aves marinhas e até a nossa saúde. Muitos animais ingerem plástico achando que é comida, e esse plástico, aos poucos, chega também até nós através da comida.<br><br>
+          Cada escolha conta. Menos plástico no dia a dia e mais cobrança por políticas ambientais são passos importantes pra mudar esse cenário.
+          </p>
+        </div>
+
+        <div class="grafico-oceano-decoracao">
+          <div class="bolha" style="width:15px;height:15px;left:50px;animation-duration:4s;"></div>
+          <div class="bolha" style="width:25px;height:25px;left:150px;animation-duration:6s;"></div>
+          <div class="bolha" style="width:20px;height:20px;left:250px;animation-duration:5s;"></div>
+
+          <img class="nadando" alt="tartarugas" src="midia/tartaruga.png" style="right: 470px; top: 30px; animation-delay: 0s, 0s;">
+          <img class="nadando" alt="tartarugas" src="midia/tartaruga.png" style="right: 480px; top: 120px; animation-delay: 5s, 1s;">
+          <img class="nadando" alt="tartarugas" src="midia/tartaruga.png" style="right: 500px; top: 200px; animation-delay: 2s, 0.5s;">
+          <img class="nadando" alt="tartarugas" src="midia/tartaruga.png" style="right: 380px; top: 320px; animation-delay: 1s, 0.7s;">
+          <img class="nadando" alt="tartarugas" src="midia/tartaruga.png" style="right: 390px; top: 330px; animation-delay: 2s, 0.4s;">
+          <img class="nadando" alt="tartarugas" src="midia/tartaruga.png" style="right: 510px; top: 360px; animation-delay: 4s, 0.3s;">
+          <img class="nadando" alt="lixo" src="midia/lixo.png" style="right: 400px; top: 35px; animation-delay: 2s, 0.1s;">
+          <img class="nadando" alt="lixo" src="midia/lixo.png" style="right: 394px; top: 260px; animation-delay: 3s, 0.2s;">
+          <img class="nadando" alt="lixo" src="midia/lixo.png" style="right: 390px; top: 360px; animation-delay: 1s, 0.5s;">
+          <img class="nadando" alt="plastico" src="midia/plastico.png" style="right: 390px; top: 192px; animation-delay: 2s, 0.5s;">
+          <img class="nadando" alt="plastico" src="midia/plastico.png" style="right: 392px; top: 340px; animation-delay: 3s, 0.5s;">
+          <img class="nadando" alt="plastico" src="midia/plastico.png" style="right: 401px; top: 120px; animation-delay: 5s, 0.5s;">
+        </div>
+      </div>
+    
+      <div class="container-grafico">
+        <canvas id="Grafico2" width="300" height="300"></canvas>
+        <div class="texto-grafico">
+          <p>
+          O aquecimento global está elevando a temperatura dos oceanos de forma alarmante. Nos últimos 50 anos, os oceanos absorveram mais de 90% do calor adicional do planeta, causando mudanças drásticas nos ecossistemas marinhos.<br><br>
+          Esse aquecimento provoca o branqueamento de corais, altera as correntes oceânicas e força espécies marinhas a migrarem para águas mais frias. Peixes, baleias e outros animais marinhos estão perdendo seus habitats naturais.<br><br>
+          A solução passa por reduzir drasticamente as emissões de gases de efeito estufa e proteger os oceanos como reguladores climáticos essenciais do planeta.
+          </p>
+        </div>
+
+        <div class="grafico-oceano-decoracao">
+          <div class="ceu"></div>
+          <div class="agua"></div>
+          <img alt="polar" class="polar" src="midia/polar.png">
+
+        </div>
+      </div>
+
+      <div class="container-grafico">
+        <canvas id="Grafico3" width="300" height="300"></canvas>
+        <div class="texto-grafico">
+          <p>
+          A acidificação dos oceanos é um dos impactos mais graves da poluição por CO2. Quando o dióxido de carbono se dissolve na água do mar, forma ácido carbônico, tornando os oceanos mais ácidos a cada ano.<br><br>
+          Esse processo destrói conchas e esqueletos de organismos marinhos como corais, moluscos e crustáceos. Toda a cadeia alimentar marinha é afetada, desde o plâncton até os grandes predadores.<br><br>
+          Se não agirmos agora, em 50 anos os oceanos podem se tornar tão ácidos que a maioria da vida marinha tal como conhecemos não conseguirá sobreviver.
+          </p>
+        </div>
+
+        <div class="grafico-oceano-decoracao-radioativo">
+          <img src="midia/baleia-radioativa.png" alt="Baleia Radioativa" class="nadando-radioativo-baleia">
+          <div class="bolha-radioativa" style="width:15px;height:15px;left:50px;animation-duration:4s;"></div>
+          <div class="bolha-radioativa" style="width:25px;height:25px;left:150px;animation-duration:6s;"></div>
+          <div class="bolha-radioativa" style="width:20px;height:20px;left:250px;animation-duration:5s;"></div>
+
+          <img class="nadando-radioativo" alt="peixe radioativo" src="midia/peixe-radioativo.png" style="right: 640px; top: 50%; animation-delay: 0s, 0s;">
+          <img class="nadando-radioativo" alt="peixe radioativo" src="midia/peixe-radioativo.png" style="right: 662px; top: 50%; animation-delay: 2s, 0s;">
+          <img class="nadando-radioativo" alt="peixe radioativo" src="midia/peixe-radioativo.png" style="right: 670px; top: 50%; animation-delay: 2s, 3s;">
+          <img class="nadando-radioativo" alt="peixe radioativo" src="midia/peixe-radioativo.png" style="right: 655px; top: 50%; animation-delay: 2s, 7s;">
+          <img class="nadando-radioativo" alt="peixe radioativo" src="midia/peixe-radioativo.png" style="right: 667px; top: 50%; animation-delay: 3s, 3s;">
+          <img class="nadando-radioativo" alt="peixe radioativo" src="midia/peixe-radioativo.png" style="right: 660px; top: 50%; animation-delay: 4s, 0s;">
+
+        </div>
+      </div>
+  </div>
+</div>
+
+<!-- JavaScript do Carousel -->
+<script>
+let slideAtual = 0;
+
+function mostrarSlide(indice) {
+  // Remove a classe 'active' de todos os containers
+  const containers = document.querySelectorAll('.container-grafico');
+  containers.forEach(container => {
+    container.classList.remove('active');
+  });
+  
+  // Remove a classe 'ativo' de todos os botões
+  const botoes = document.querySelectorAll('.grafico-botoes');
+  botoes.forEach(botao => {
+    botao.classList.remove('ativo');
+  });
+  
+  // Adiciona a classe 'active' ao container selecionado
+  containers[indice].classList.add('active');
+  
+  // Adiciona a classe 'ativo' ao botão selecionado
+  botoes[indice].classList.add('ativo');
+  
+  // Atualiza o slide atual
+  slideAtual = indice;
+}
+
+// Inicializa os gráficos quando o documento carregar
+document.addEventListener('DOMContentLoaded', function() {
+  // Aqui você pode adicionar o código para inicializar seus gráficos
+  // Por exemplo:
+  
+  // Gráfico 1 - Exemplo de gráfico de barras
+  const ctx1 = document.getElementById('Grafico1').getContext('2d');
+  new Chart(ctx1, {
+    type: 'bar',
+    data: {
+      labels: ['China', 'Indonésia', 'Filipinas', 'Vietnã', 'Brasil'],
+      datasets: [{
+        label: 'Lixo Plástico (milhões de toneladas)',
+        data: [8.8, 3.2, 2.7, 1.8, 1.6],
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.8)',
+          'rgba(54, 162, 235, 0.8)',
+          'rgba(255, 205, 86, 0.8)',
+          'rgba(75, 192, 192, 0.8)',
+          'rgba(153, 102, 255, 0.8)'
+        ]
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+
+  // Gráfico 2 - Exemplo de gráfico de linha
+  const ctx2 = document.getElementById('Grafico2').getContext('2d');
+  new Chart(ctx2, {
+    type: 'line',
+    data: {
+      labels: ['1980', '1990', '2000', '2010', '2020'],
+      datasets: [{
+        label: 'Temperatura dos Oceanos (°C)',
+        data: [15.2, 15.4, 15.7, 16.1, 16.5],
+        borderColor: 'rgba(255, 99, 132, 1)',
+        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+        tension: 0.4
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: {
+          beginAtZero: false
+        }
+      }
+    }
+  });
+
+  // Gráfico 3 - Exemplo de gráfico de pizza
+  const ctx3 = document.getElementById('Grafico3').getContext('2d');
+  new Chart(ctx3, {
+    type: 'doughnut',
+    data: {
+      labels: ['pH Normal', 'pH Ácido', 'pH Crítico'],
+      datasets: [{
+        data: [40, 35, 25],
+        backgroundColor: [
+          'rgba(75, 192, 192, 0.8)',
+          'rgba(255, 205, 86, 0.8)',
+          'rgba(255, 99, 132, 0.8)'
+        ]
+      }]
+    },
+    options: {
+      responsive: true
+    }
+  });
+});
+</script>
+
+<svg width="100%" height="100" viewBox="0 0 1000 100" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+  <path d="M0,50 L950,50 L1000,100" stroke="black" stroke-width="2" fill="none"/>
+</svg>
+
+  <div class="titulo">
+    <h1>uff</h1>
+  </div>
+</body>
+
+</html>
