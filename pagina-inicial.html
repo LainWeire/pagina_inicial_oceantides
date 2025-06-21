@@ -26,7 +26,6 @@ window.addEventListener('scroll', function() {
 </script>
 
 <!--DIALOG DO POP UP DOAÇÃO, TUDO ENTRE ESTE COMENTÁRIO ENVOLVE JAVASCRIPT-->
-
 <dialog id="doacao-dialog">
   <div class="pop-up-container-esq">
     <img
@@ -57,7 +56,7 @@ window.addEventListener('scroll', function() {
       </button>
     </div>
 
-    <!-- CONTEÚDO INICIAL - Menu valor + botão doar -->
+    <!-- CONTEÚDO INICIAL - Menu valor -->
     <div id="conteudo-menu" class="conteudo-menu-centralizado">
       <h3 id="titulo-menu">Sua doação importa.</h3>
       <div class="doacao-opcoes">
@@ -80,16 +79,7 @@ window.addEventListener('scroll', function() {
         </div>
       </div>
 
-      <button
-        type="button"
-        class="enviar"
-        id="botao-doar"
-        onclick="mostrarFormasPagamento()"
-      >
-        Doar
-      </button>
-
-      <!-- DIV FORMAS DE PAGAMENTO APARECE SÓ APÓS CLICAR DOAR -->
+      <!-- DIV FORMAS DE PAGAMENTO APARECEM APÓS SELECIONAR VALOR -->
       <div id="forma-pagamento-container" class="forma-pagamento-container">
         <h4 id="titulo-pagamento">💳 Escolha a forma de pagamento:</h4>
         <div id="selecao-pagamento" class="formas-pagamento-opcoes">
@@ -169,6 +159,11 @@ window.addEventListener('scroll', function() {
           maxlength="14"
         />
       </div>
+      <div style="margin-top: 1.5rem;">
+        <button class="enviar" onclick="processarPagamentoCartao()">
+          Confirmar Pagamento
+        </button>
+      </div>
     </div>
 
     <div id="form-pix" class="formulario-pagamento">
@@ -182,7 +177,7 @@ window.addEventListener('scroll', function() {
         </div>
         <div class="campo-grupo">
           <label for="codigo-pix">Código PIX:</label>
-          <div class="codigo-pix" id="codigo-pix">
+          <div class="codigo-pix" id="codigo-pix" onclick="copiarCodigoPix()" style="cursor: pointer;">
             00020126580014BR.GOV.BCB.PIX013665a9e5b8...
           </div>
         </div>
@@ -196,6 +191,11 @@ window.addEventListener('scroll', function() {
           placeholder="000.000.000-00"
           maxlength="14"
         />
+      </div>
+      <div style="margin-top: 1.5rem;">
+        <button class="enviar" onclick="processarPagamentoPix()">
+          Confirmar PIX
+        </button>
       </div>
     </div>
 
@@ -240,7 +240,7 @@ window.addEventListener('scroll', function() {
           placeholder="seu@email.com"
         />
       </div>
-      <div class="campo-group">
+      <div class="campo-grupo">
         <label for="telefone">Telefone</label>
         <input
           type="text"
@@ -251,7 +251,7 @@ window.addEventListener('scroll', function() {
         />
       </div>
       <div style="margin-top: 1.5rem;">
-        <button class="botao-confirmar" onclick="processarPagamentoBoleto()">
+        <button class="enviar" onclick="processarPagamentoBoleto()">
           Gerar Boleto
         </button>
       </div>
@@ -259,13 +259,11 @@ window.addEventListener('scroll', function() {
   </div>
 </dialog>
 
-
 <script>
   const dialog = document.getElementById("doacao-dialog");
 
   // Containers e elementos
   const formaPagamentoContainer = document.getElementById("forma-pagamento-container");
-  const botaoDoar = document.getElementById("botao-doar");
   const conteudoMenu = document.getElementById("conteudo-menu");
   const botaoVoltarMenu = document.getElementById("botao-voltar-menu");
 
@@ -308,10 +306,22 @@ window.addEventListener('scroll', function() {
 
   function MudaValor(valor) {
     document.getElementById("valor").value = valor;
+    // Mostrar formas de pagamento automaticamente quando um valor for selecionado
+    mostrarFormasPagamento();
   }
 
-  // Mostra as formas de pagamento abaixo do botão doar
+  // Mostra as formas de pagamento quando um valor é inserido
   function mostrarFormasPagamento() {
+    const valorInput = document.getElementById("valor");
+    const valor = parseFloat(valorInput.value);
+
+    if (valor && valor > 0) {
+      formaPagamentoContainer.classList.add("mostrar");
+    }
+  }
+
+  // Quando usuário seleciona a forma de pagamento
+  function selecionarPagamento(tipo) {
     const valorInput = document.getElementById("valor");
     const valor = parseFloat(valorInput.value);
 
@@ -320,12 +330,6 @@ window.addEventListener('scroll', function() {
       return;
     }
 
-    formaPagamentoContainer.classList.add("mostrar");
-    botaoDoar.textContent = "Confirmar Doação de R$" + valor.toFixed(2);
-  }
-
-  // Quando usuário seleciona a forma de pagamento
-  function selecionarPagamento(tipo) {
     tipoPagamentoSelecionado = tipo;
 
     // Esconder menu inicial inteiro
@@ -363,9 +367,19 @@ window.addEventListener('scroll', function() {
   // Centraliza e mostra menu inicial
   function mostrarMenuInicial() {
     conteudoMenu.style.display = "flex";
-    formaPagamentoContainer.classList.remove("mostrar");
-    botaoDoar.textContent = "Doar";
+    // Manter formas de pagamento visíveis se houver valor
+    const valor = parseFloat(document.getElementById("valor").value);
+    if (valor && valor > 0) {
+      formaPagamentoContainer.classList.add("mostrar");
+    } else {
+      formaPagamentoContainer.classList.remove("mostrar");
+    }
   }
+
+  // Event listener para mostrar formas de pagamento quando digitar valor
+  document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("valor").addEventListener("input", mostrarFormasPagamento);
+  });
 
   // Funções de processamento - simuladas
 
@@ -488,7 +502,13 @@ window.addEventListener('scroll', function() {
       e.target.value = e.target.value.replace(/[^0-9]/g, "");
     });
   });
+
+  // Botão para teste - pode remover em produção
+  function testarDialog() {
+    AbrirPopupDoacao();
+  }
 </script>
+
 
 <!--DIALOG DO POP UP DOAÇÃO, TUDO ENTRE ESTE COMENTÁRIO ENVOLVE JAVASCRIPT-->
 
